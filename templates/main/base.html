@@ -13,16 +13,26 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    {% if title %}
     <title>Self Diary - {% block title %} {% endblock %}</title>
-    {% else %}
-    <title>Self Diary </title>
-    {% endif %}
 </head>
 
 <body>
 
     {% block body %}{% endblock %}
+
+    <br>
+    <hr>
+    <br>
+
+    <footer>
+        <ul>
+            <li><a href="{% url 'index' %}">Homepage</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'self_help' %}">Self-Help Advice</a></li>
+            <li><a href="{% url 'settings' %}">Site Settings</a></li>
+            <li><a href="{% url 'disclaimer' %}">Disclaimer</a></li>
+        </ul>
+    </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
