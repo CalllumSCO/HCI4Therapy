@@ -10,10 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+SETTINGS_DIR = os.path.dirname(__file__)
+PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
+PROJECT_PATH = os.path.abspath(PROJECT_PATH)
+
+TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
+STATIC_PATH = os.path.join(PROJECT_PATH, 'static')
 
 
 # Quick-start development settings - unsuitable for production
@@ -70,6 +77,10 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_DIRS = (
+    TEMPLATE_PATH,
+)
+
 WSGI_APPLICATION = "djangoProject.wsgi.application"
 
 
@@ -110,8 +121,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATICFILES_DIRS = (
+    STATIC_PATH,
+)
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
