@@ -14,3 +14,14 @@ class Entry(models.Model):
 
     class Meta:
         verbose_name_plural = "Entries"
+
+
+class Article(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=64)
+    category = models.CharField(max_length=32, null=True)
+    description = models.TextField(max_length=256)
+    url = models.URLField()
+
+    def __str__(self):
+        return self.title

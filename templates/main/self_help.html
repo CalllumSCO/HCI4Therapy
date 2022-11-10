@@ -5,5 +5,63 @@
 {% endblock %}
 
 {% block body %}
-    <h2>This is the self-help advice page, more content to come soon.</h2>
+    <a href="{% url 'new_article' %}">Submit a new Article!</a>
+    <br><br>
+    <h3>Note: These articles are not a substitute for professional support. If you're experiencing a severe mental
+    health crisis, please contact a professional.</h3>
+
+    <h2>Mental Health Advice</h2>
+    <br><br>
+    {% if mental_health_advice %}
+        {% for article in mental_health_advice %}
+            <a href="{{ article.url }}">{{ article.title }}</a>
+        {% endfor %}
+    {% else %}
+        No articles for Mental Health Advice! Why not submit your own?
+    {% endif %}
+    <br><hr><br>
+
+    <h2>Meditation</h2>
+    <br><br>
+    {% if meditation %}
+        {% for article in meditation %}
+            <a href="{{ article.url }}">{{ article.title }}</a>
+        {% endfor %}
+    {% else %}
+        No articles for Meditation! Why not submit your own?
+    {% endif %}
+    <br><hr><br>
+
+    <h2>Mindfulness</h2>
+    <br><br>
+    {% if mindfulness %}
+        {% for article in mindfulness %}
+            <a href="{{ article.url }}">{{ article.title }}</a>
+        {% endfor %}
+    {% else %}
+        No articles for Mindfulness! Why not submit your own?
+    {% endif %}
+    <br><hr><br>
+
+    <h2>Sleep</h2>
+    <br><br>
+    {% if sleep %}
+        {% for article in sleep %}
+            <a href="{{ article.url }}">{{ article.title }}</a>
+        {% endfor %}
+    {% else %}
+        No articles for Sleep! Why not submit your own?
+    {% endif %}
+    <br><hr><br>
+
+    <h2>Stress</h2>
+    <br><br>
+    {% if stress %}
+        {% for article in stress %}
+            <a href="{{ article.url }}">{{ article.title }}</a>
+        {% endfor %}
+    {% else %}
+        No articles for Stress! Why not submit your own?
+    {% endif %}
+
 {% endblock %}

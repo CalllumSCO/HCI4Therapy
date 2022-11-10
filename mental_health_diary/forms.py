@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from .models import Entry
+from .models import Entry, Article
 from django import forms
 
 
@@ -34,3 +34,26 @@ class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         fields = ('happiness', 'disgust', 'url')
+
+
+article_category_choices = (
+    ("1", "Mental Health Advice"),
+    ("2", "Meditation"),
+    ("3", "Mindfulness"),
+    ("4", "Sleep"),
+    ("5", "Stress"),
+)
+
+
+class ArticleForm(forms.ModelForm):
+    title = forms.CharField(max_length=256, help_text="Please enter the title for your article",
+                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}))
+    category = forms.ChoiceField(choices=article_category_choices)
+    description = forms.CharField(max_length=512, help_text="Enter a description of the article",
+                                  widget=forms.Textarea(
+                                      attrs={'class': 'form-control', 'placeholder': 'A description of the article'}))
+    url = forms.URLField(max_length=200)
+
+    class Meta:
+        model = Article
+        fields = ('title', 'category', 'description', 'url')

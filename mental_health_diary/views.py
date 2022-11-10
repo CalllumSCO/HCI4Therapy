@@ -3,7 +3,8 @@ import random
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .forms import EntryForm
+from .forms import EntryForm, ArticleForm
+from .models import Article
 
 
 # Create your views here.
@@ -17,7 +18,21 @@ def about(request):
 
 
 def self_help(request):
-    return render(request, 'main/self_help.html')
+    MentalHealthAdvice = Article.objects.filter(category="1")
+    Meditation = Article.objects.filter(category="2")
+    Mindfulness = Article.objects.filter(category="3")
+    Sleep = Article.objects.filter(category="4")
+    Stress = Article.objects.filter(category="5")
+
+    context = {
+        "mental_health_advice" : MentalHealthAdvice,
+        "meditation" : Meditation,
+        "mindfulness" : Mindfulness,
+        "sleep" : Sleep,
+        "stress" : Stress
+    }
+
+    return render(request, 'main/self_help.html', context=context)
 
 
 def settings(request):
@@ -65,6 +80,23 @@ def new_entry(request):
     }
 
     return render(request, "main/new_entry.html", context=context)
+
+def new_article(request):
+
+    form = ArticleForm()
+
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('index')
+
+    context = {
+        'form' : form
+    }
+
+    return render(request, "main/new_article.html", context=context)
+
 
 def generate_random_slug():
     string = ""
