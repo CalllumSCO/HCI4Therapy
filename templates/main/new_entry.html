@@ -1,0 +1,28 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block body %}
+    <div>
+    <h1>Create a New Entry</h1>
+    <div class='textform'>
+        <form id="deck_form" method="post" action="{% url 'new_entry' %}" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+                {{ field|as_crispy_field }}
+            {% endfor %}
+
+            <input type="submit" name="submit" class="btn btn-success" value="Create" />
+        </form>
+    </div>
+</div>
+
+{% endblock %}
