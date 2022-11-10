@@ -6,4 +6,12 @@
 
 {% block body %}
     <h2>This is the main page, more content to come soon.</h2>
+
+    {% if user.is_authenticated %}
+        {% if entries %}
+            {% for entry in entries %}
+                {{ entry.url }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
 {% endblock %}
