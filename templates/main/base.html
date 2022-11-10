@@ -67,7 +67,7 @@
             <i id="user-icon" class="fas fa-user fa-3x"></i>
             </a>
 	  </nav>
-    
+    <div id="main-content">
     {% block nav_block_right %}
     {% endblock %}
 
@@ -103,17 +103,21 @@
 
         </ul>
     </footer>
+    </div>
     <!-- Optional JavaScript -->
     <script>
         /* Set the width of the side navigation to 250px */
           function openNav() {
           document.getElementById("mySidenav").style.width = "180px";
+          document.getElementById("main-content").style.marginLeft = "180px";
           }
 
           /* Set the width of the side navigation to 0 */
           function closeNav() {
           document.getElementById("mySidenav").style.width = "0";
+          document.getElementById("main-content").style.marginLeft = "0";
           }
+
     </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
