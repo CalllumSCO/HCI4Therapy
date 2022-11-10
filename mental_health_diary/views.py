@@ -4,13 +4,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import EntryForm, ArticleForm
-from .models import Article
+from .models import Entry, Article
 
 
 # Create your views here.
 
 def index(request):
-    return render(request, 'main/index.html')
+    context = {}
+    if request.user.is_authenticated:
+        entries = Entry.objects.filter(creator=request.user)
+        context['entries'] = entries
+    return render(request, 'main/index.html', context=context)
 
 
 def about(request):
