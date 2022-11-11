@@ -117,4 +117,9 @@ canvas {
   .sidenav a {font-size: 18px;}
 }
 
+.container-fluid{
+    align-items : center;
+    justify-content : center
+}
+
 

@@ -8,7 +8,11 @@
 
     {% if entry and entry.creator == user %}
         Happiness = {{ entry.happiness }}
+        Anger = {{ entry.anger }}
         Disgust = {{ entry.disgust }}
+        Fear = {{ entry.fear}}
+        Power = {{ entry.power }}
+        Peace = {{ entry.peace }}
     {% else %}
         <h2>Entry cannot be accessed! Create one <a href="{% url 'new_entry' %}">here</a></h2>
     {% endif %}

@@ -29,7 +29,7 @@
 
     </div>
       
-	  <nav class="navbar navbar-expand-lg navbar navbar-fixed-top" id="main-nav">
+	  <nav class="navbar navbar-expand-lg navbar" id="main-nav">
 		<div class="float-left">
               <!-- Use any element to open the sidenav -->
         <span id="nav-button" type="button" class="fa fa-bars fa-3x" onclick="openNav()"></span>
@@ -86,20 +86,24 @@
 
     <footer>
         <ul>
-            <li><a href="{% url 'index' %}">Homepage</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="{% url 'self_help' %}">Self-Help Advice</a></li>
-            <li><a href="{% url 'settings' %}">Site Settings</a></li>
-            <li><a href="{% url 'disclaimer' %}">Disclaimer</a></li>
 
-
-            {% if user.is_authenticated %}
-            <li class="nav-item"><a href="{% url 'logout' %}" class="nav-line px-2 text-muted">Logout</a></li>
-            <li class="nav-item"><a href="{% url 'new_entry' %}" class="nav-line px-2 text-muted">New Entry</a></li>
-            {% else %}
-            <li class="nav-item"><a href="{% url 'login' %}" class="nav-line px-2 text-muted">Login</a></li>
-            <li class="nav-item"><a href="{% url 'register' %}" class="nav-line px-2 text-muted">Register</a></li>
-            {% endif %}
+        <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled justify-content-center align-items-center">
+            <li class="nav-item px-2 text-muted">
+                <a href="{% url 'index' %}">Homepage</a>
+            </li>
+            <li class="nav-item px-2 text-muted">
+                <a href="{% url 'about' %}">About</a>
+            </li>
+            <li class="nav-item px-2 text-muted">
+                <a href="{% url 'self_help' %}">Self-Help Advice</a>
+            </li>
+            <li class="nav-item px-2 text-muted">
+                <a href="{% url 'settings' %}">Site Settings</a>
+            </li>
+            <li class="nav-item px-2 text-muted">
+                <a href="{% url 'disclaimer' %}">Disclaimer</a>
+            </li>
+        </nav>
 
         </ul>
     </footer>

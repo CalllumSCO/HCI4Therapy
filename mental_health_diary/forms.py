@@ -16,24 +16,50 @@ class UserRegisterForm(UserCreationForm):
 
 class EntryForm(forms.ModelForm):
     happiness = forms.IntegerField(validators=[MinValueValidator(-5), MaxValueValidator(5)],
-                                   help_text="Please enter your happiness from -5 to 5.",
+                                   help_text="Please rate your happiness for today from -5 to 5.",
                                    widget=forms.NumberInput(attrs={'class': 'form-control',
                                                                    'placeholder': '-5 - 5',
                                                                    'min': -5,
                                                                    'max': 5}))
+    anger = forms.IntegerField(validators=[MinValueValidator(-5), MaxValueValidator(5)],
+                               help_text="Please rate your anger for today from -5 to 5.",
+                               widget=forms.NumberInput(attrs={'class': 'form-control',
+                                                               'placeholder': '-5 - 5',
+                                                               'min': -5,
+                                                               'max': 5}))
 
     disgust = forms.IntegerField(validators=[MinValueValidator(-5), MaxValueValidator(5)],
-                                 help_text="Please enter your disgust from -5 to 5.",
+                                 help_text="Please rate your disgust today from -5 to 5.",
                                  widget=forms.NumberInput(attrs={'class': 'form-control',
                                                                  'placeholder': '-5 - 5',
                                                                  'min': -5,
                                                                  'max': 5}))
 
+    fear = forms.IntegerField(validators=[MinValueValidator(-5), MaxValueValidator(5)],
+                              help_text="Please rate your fear today from -5 to 5.",
+                              widget=forms.NumberInput(attrs={'class': 'form-control',
+                                                              'placeholder': '-5 - 5',
+                                                              'min': -5,
+                                                              'max': 5}))
+
+    power = forms.IntegerField(validators=[MinValueValidator(-5), MaxValueValidator(5)],
+                               help_text="Please rate your feeling of power today from -5 to 5.",
+                               widget=forms.NumberInput(attrs={'class': 'form-control',
+                                                               'placeholder': '-5 - 5',
+                                                               'min': -5,
+                                                               'max': 5}))
+    peace = forms.IntegerField(validators=[MinValueValidator(-5), MaxValueValidator(5)],
+                               help_text="Please rate your feeling of peace today from -5 to 5.",
+                               widget=forms.NumberInput(attrs={'class': 'form-control',
+                                                               'placeholder': '-5 - 5',
+                                                               'min': -5,
+                                                               'max': 5}))
+
     url = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Entry
-        fields = ('happiness', 'disgust', 'url')
+        fields = ('happiness', 'anger', 'disgust', 'fear', 'power', 'peace', 'url')
 
 
 article_category_choices = (

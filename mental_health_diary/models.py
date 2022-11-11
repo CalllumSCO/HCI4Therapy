@@ -9,7 +9,11 @@ class Entry(models.Model):
     id = models.AutoField(primary_key=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     happiness = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
+    anger = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
     disgust = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
+    fear = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
+    power = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
+    peace = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
     url = models.CharField(null=True, max_length=10)
 
     class Meta:

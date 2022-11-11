@@ -5,13 +5,37 @@
 {% endblock %}
 
 {% block body %}
-    <h2>This is the main page, more content to come soon.</h2>
+    <div class = "jumbotron text-center align-items-center pb-2">
+        <h2>This is the main page, more content to come soon.</h2>
+
+        <a href="{% url 'new_entry' %}"
+        class="btn btn-success btn-lg" role="button">New Entry</a>
+    </div>
 
     {% if user.is_authenticated %}
         {% if entries %}
             {% for entry in entries %}
-                {{ entry.url }}
+                <div class="card">
+                    <div class="card bg-light text-dark justify-content-center align-items-center">
+                        Entry for ~date~
+                        <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled">
+                        <li class="nav-item">
+                            <a href="entry/{{ entry.url }}/"
+                               class="btn btn-outline-info p" role="button">
+                                View Entry
+                            </a>
+                        </li>
+                        <li class="nav-item" style="margin-left: 20px">
+                            <a href="edit-entry/{{ entry.url }}/"
+                           class="btn btn-outline-warning p" role="button">
+                            Edit Entry
+                            </a>
+                        </li>
+                        </nav>
+                    </div>
+                </div>
             {% endfor %}
         {% endif %}
     {% endif %}
+    </div>
 {% endblock %}

@@ -1,9 +1,12 @@
 import random
 
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.urls import reverse
+
 from .forms import EntryForm, ArticleForm
 from .models import Entry, Article
 
@@ -114,6 +117,30 @@ def view_entry(request, entry_slug):
         context_dict['entry'] = None
 
     return render(request, 'main/view_entry.html', context=context_dict)
+
+@login_required
+def edit_entry(request, entry_slug):
+    # View to edit entries
+
+    try:
+        # Try and get the entry being edited by searching by entry_slug
+        editing = Entry.objects.get(url = entry_slug)
+        form = EntryForm(instance=editing)
+
+        if request.method == 'POST':
+            form = EntryForm(instance=editing)
+            if form.is_valid():
+                entry = form.save()
+            return HttpResponseRedirect(reverse('main:index'))
+
+        context_dict = {'form': form, 'instance': editing}
+    except Entry.DoesNotExist:
+        context_dict = {'form': None, 'instance': None}
+
+    return render(request, 'main/edit_entry.html', context = context_dict)
+
+
+
 
 def generate_random_slug():
     string = ""
