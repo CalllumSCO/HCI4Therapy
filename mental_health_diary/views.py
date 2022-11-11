@@ -1,5 +1,6 @@
 import random
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -29,11 +30,11 @@ def self_help(request):
     Stress = Article.objects.filter(category="5")
 
     context = {
-        "mental_health_advice" : MentalHealthAdvice,
-        "meditation" : Meditation,
-        "mindfulness" : Mindfulness,
-        "sleep" : Sleep,
-        "stress" : Stress
+        "mental_health_advice": MentalHealthAdvice,
+        "meditation": Meditation,
+        "mindfulness": Mindfulness,
+        "sleep": Sleep,
+        "stress": Stress
     }
 
     return render(request, 'main/self_help.html', context=context)
@@ -61,7 +62,6 @@ def register(request):
 
 
 def new_entry(request):
-
     form = EntryForm()
 
     if request.method == 'POST':
@@ -77,16 +77,15 @@ def new_entry(request):
             form.save(commit=True)
             return redirect('index')
 
-
     context = {
-        'title' : 'Add New Entry',
-        'form' : form
+        'title': 'Add New Entry',
+        'form': form
     }
 
     return render(request, "main/new_entry.html", context=context)
 
-def new_article(request):
 
+def new_article(request):
     form = ArticleForm()
 
     if request.method == 'POST':
@@ -96,16 +95,30 @@ def new_article(request):
             return redirect('index')
 
     context = {
-        'form' : form
+        'form': form
     }
 
     return render(request, "main/new_article.html", context=context)
 
 
+@login_required
+def view_entry(request, entry_slug):
+    context_dict = {}
+
+    context_dict['user'] = request.user
+
+    try:
+        entry = Entry.objects.get(url=entry_slug)
+        context_dict['entry'] = entry
+    except Entry.DoesNotExist:
+        context_dict['entry'] = None
+
+    return render(request, 'main/view_entry.html', context=context_dict)
+
 def generate_random_slug():
     string = ""
     possible_values = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     for i in range(10):
-        random_value = random.randint(0, len(possible_values)-1)
+        random_value = random.randint(0, len(possible_values) - 1)
         string += possible_values[random_value]
     return string

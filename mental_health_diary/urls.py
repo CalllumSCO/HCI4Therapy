@@ -16,5 +16,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='main/logout.html'), name='logout'),
     path('new-entry/', views.new_entry, name='new_entry'),
     path('new-article/', views.new_article, name='new_article'),
+    path('entry/<str:entry_slug>/', views.view_entry, name='view_entry'),
 
 ]

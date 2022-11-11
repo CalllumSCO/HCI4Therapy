@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    View Entry
+{% endblock %}
+
+{% block body %}
+
+    {% if entry and entry.creator == user %}
+        Happiness = {{ entry.happiness }}
+        Disgust = {{ entry.disgust }}
+    {% else %}
+        <h2>Entry cannot be accessed! Create one <a href="{% url 'new_entry' %}">here</a></h2>
+    {% endif %}
+{% endblock %}
