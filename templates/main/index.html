@@ -5,37 +5,64 @@
 {% endblock %}
 
 {% block body %}
+    {% if user.is_authenticated %}
     <div class = "jumbotron text-center align-items-center pb-2">
-        <h2>This is the main page, more content to come soon.</h2>
-
-        <a href="{% url 'new_entry' %}"
-        class="btn btn-success btn-lg" role="button">New Entry</a>
+        <h2>Hi {{ user.username }}</h2>
+        <br>
+        <h3>How are you feeling?</h3>
     </div>
 
-    {% if user.is_authenticated %}
+
+    <div class="text-center">
+        <a href="{% url 'new_entry' %}">
+        <button type="button" class="btn btn-outline-success btn-block w-50" style="font-size: 24px">
+            Log My Day
+        </button>
+        </a>
+    </div>
+
+    <br><br>
+
+
         {% if entries %}
             {% for entry in entries %}
-                <div class="card">
+                <div class="card w-50">
                     <div class="card bg-light text-dark justify-content-center align-items-center">
                         Entry for ~date~
-                        <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled">
-                        <li class="nav-item">
-                            <a href="entry/{{ entry.url }}/"
-                               class="btn btn-outline-info p" role="button">
-                                View Entry
-                            </a>
-                        </li>
+                    <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled">
+                    <li class="nav-item">
+                        <a href="entry/{{ entry.url }}/"
+                           class="btn btn-outline-info p" role="button">
+                            View Entry
+                        </a>
+                    </li>
                         <li class="nav-item" style="margin-left: 20px">
-                            <a href="edit-entry/{{ entry.url }}/"
-                           class="btn btn-outline-warning p" role="button">
-                            Edit Entry
-                            </a>
-                        </li>
-                        </nav>
-                    </div>
+                        <a href="edit-entry/{{ entry.url }}/"
+                        class="btn btn-outline-warning p" role="button">
+                        Edit Entry
+                        </a>
+                    </li>
+                    </nav>
+                </div>
                 </div>
             {% endfor %}
         {% endif %}
+    {% else %}
+        <div class="container-md">
+         <div class="w-50 p3"><h1>Journal your emotions and mental health</h1></div>
+        <br>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16" style="margin-left:70px">
+  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+            </svg>
+                Keep track of your daily moods and emotions</li> <br>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16" style="margin-left:70px">
+  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+</svg>
+                View and explore your data
+
+        <br><br>
+        <h2><a href="{% url 'login' %}" style = "color: indianred">Sign In</a> or <a href="{% url 'register' %}" style = "color: mediumpurple">Register</a> to get started!</h2>
+        </div>
     {% endif %}
-    </div>
 {% endblock %}
