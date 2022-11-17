@@ -39,7 +39,7 @@
 	  <nav class="navbar navbar-expand-lg navbar" id="main-nav">
 		<div class="float-left">
               <!-- Use any element to open the sidenav -->
-        <span id="nav-button" type="button" class="fa fa-bars fa-3x" onclick="openNav()"></span>
+        <span id="nav-button" type="button" class="fa fa-bars fa-3x" onclick="toggleNav()"></span>
         <a href="{% url 'index' %}">
         <img src="{% static 'logo1.png' %}" alt="emoteit" id="logo">
 		{% block nav_block_left %}
@@ -120,9 +120,16 @@
     <!-- Optional JavaScript -->
     <script>
         /* Set the width of the side navigation to 250px */
-          function openNav() {
-          document.getElementById("mySidenav").style.width = "180px";
-          document.getElementById("main-content").style.marginLeft = "180px";
+          function toggleNav() {
+          var element = document.getElementById("mySidenav");
+          if (element.style.width == "180px"){
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main-content").style.marginLeft = "0";
+            
+          }  else{
+            document.getElementById("mySidenav").style.width = "180px";
+            document.getElementById("main-content").style.marginLeft = "180px";
+          }
           }
 
           /* Set the width of the side navigation to 0 */
