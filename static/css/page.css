@@ -2,7 +2,13 @@ body {
     margin: 0;
     background-color: #DA7A7A;
     overflow-x: hidden;
+    background-image: url("Background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:cover;
+    background-position: right;
 }
+
 
 canvas {
     margin-top: 0;
@@ -15,26 +21,13 @@ canvas {
     padding:4px;
 }
 
-
-#title-div {
-    display: block;
-    width: 100%;
-    font-size: 35px;
-    position: absolute;
-    
-    margin-left: auto;
-    margin-right: auto;
-    font-family: "Comic Sans MS";
-    text-align: center;
-}
-
 #logo {
     width:190px;
     height:auto;
 }
 
 #main-nav{
-    background-color: white;
+    background-color:transparent;
 
     margin-bottom:25px;
 }
@@ -66,10 +59,6 @@ canvas {
     height:auto;
     color:#AFE1AF;
     
-}
-
-#account-div{
-    background-color:#AFE1AF;
 }
 
 /* The side navigation menu */
