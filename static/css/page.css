@@ -19,8 +19,6 @@ canvas {
 footer {
   position: fixed;
   bottom: 0;
-  align-items: center;
-  background-color: #ffffff;
 }
 
 
@@ -141,4 +139,15 @@ footer {
     justify-content : center
 }
 
+#top-nav-btn{
+  margin-bottom: .5rem;
+  margin-left: .5rem;
+  margin-right: .5rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
 
+}
+
+#sidebar-btn{
+  visibility: visible;
+}

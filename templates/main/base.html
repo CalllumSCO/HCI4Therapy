@@ -14,11 +14,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/page.css' %}" type="text/css">
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-
+ <link rel="stylesheet" href="{% static 'css/page.css' %}" type="text/css">
     <!-- Loading D3 -->
     <script src = "https://d3js.org/d3.v4.min.js"></script>
 
@@ -43,7 +43,7 @@
 	  <nav class="navbar navbar-expand-lg navbar" id="main-nav">
 		<div class="float-left">
               <!-- Use any element to open the sidenav -->
-        <span id="nav-button" type="button" class="fa fa-bars fa-3x" onclick="toggleNav()"></span>
+        <span id="sidebar-btn" type="button" class="fa fa-bars fa-3x" onclick="toggleNav()"></span>
         <a href="{% url 'index' %}">
         <img src="{% static 'logo1.png' %}" alt="emoteit" id="logo">
 		{% block nav_block_left %}
@@ -55,29 +55,31 @@
 		<ul class="navbar-nav navbar-right ml-auto">
             {% if user.is_authenticated %}
             <div id="user-hi">
-			Hi, {{ user.username }}!
+			<h4><b>Hi, {{ user.username }}!</b></h4>
             </div>
             <a href="{% url 'logout' %}">
-                <button type="button" class="btn btn-primary mr-1  btn-lg active" aria-pressed="true" aria-label="Right Align" >Logout
+                <button type="button" class="btn btn-primary mr-1 btn-lg active" id="top-nav-btn" aria-pressed="true" aria-label="Right Align" >Logout
                     <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
                 </button>
                 </a>
+
+            <a href="">
+                <i id="user-icon" class="fas fa-user fa-3x"></i>
+                </a>
 			{% else %}
             <a href="{% url 'login' %}">
-            <button type="button" class="btn btn-primary mr-1  btn-lg active" aria-pressed="true" aria-label="Right Align" >Login
+            <button type="button" id="top-nav-btn" class="btn btn-dark mr-1 btn-lg active"  aria-pressed="true" aria-label="Right Align" >Login
                 <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
             </button>
             </a>
             <a href="{% url 'register' %}">
-            <button type="button" class="btn btn-dark mr-1  btn-lg active" aria-label="Right Align">Register
+            <button  type="button" id="top-nav-btn" class="btn btn-dark mr-1 btn-lg active"  aria-label="Right Align">Register
                 <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
             </button>
             </a>
             {% endif %}
 
-            <a href="">
-            <i id="user-icon" class="fas fa-user fa-3x"></i>
-            </a>
+            
         </div>
 	  </nav>
     
@@ -100,21 +102,21 @@
     <footer>
         <span>
             <ul>
-                <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled justify-content-center align-items-center">
+                <nav class="navbar navbar-expand-sm list-unstyled justify-content-center rounded" id="about-div">
                     <li class="nav-item px-2 text-muted">
-                        <a href="{% url 'index' %}">Homepage</a>
+                        <a href="{% url 'index' %}"><strong>Homepage</strong></a>
                     </li>
                     <li class="nav-item px-2 text-muted">
-                        <a href="{% url 'about' %}">About</a>
+                        <a href="{% url 'about' %}"><strong>About</strong></a>
                     </li>
                     <li class="nav-item px-2 text-muted">
-                        <a href="{% url 'self_help' %}">Self-Help Advice</a>
+                        <a href="{% url 'self_help' %}"><strong>Resources</strong></a>
                     </li>
                     <li class="nav-item px-2 text-muted">
-                        <a href="{% url 'settings' %}">Site Settings</a>
+                        <a href="{% url 'settings' %}"><strong>Settings</strong> </a>
                     </li>
                     <li class="nav-item px-2 text-muted">
-                        <a href="{% url 'disclaimer' %}">Disclaimer</a>
+                        <a href="{% url 'disclaimer' %}"><strong>Disclaimer</strong></a>
                     </li>
                 </nav>
         
@@ -131,10 +133,12 @@
           if (element.style.width == "180px"){
             document.getElementById("mySidenav").style.width = "0";
             document.getElementById("main-content").style.marginLeft = "0";
+            document.getElementById("sidebar-btn").style.visibility = "visible"
             
           }  else{
             document.getElementById("mySidenav").style.width = "180px";
             document.getElementById("main-content").style.marginLeft = "180px";
+            document.getElementById("sidebar-btn").style.visibility = "hidden";
           }
           }
 
@@ -142,6 +146,7 @@
           function closeNav() {
           document.getElementById("mySidenav").style.width = "0";
           document.getElementById("main-content").style.marginLeft = "0";
+          document.getElementById("sidebar-btn").style.visibility = "visible";
           }
 
     </script>
