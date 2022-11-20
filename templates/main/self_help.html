@@ -5,21 +5,26 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{% url 'new_article' %}">Submit a new Article!</a>
+    <a href="{% url 'new_article' %}">
+        <button type="button" class="btn btn-dark mr-1  btn-lg active" aria-pressed="true">
+        Submit a new Article!</button>
+    </a>
     <br><br>
     <h3>Note: These articles are not a substitute for professional support. If you're experiencing a severe mental
     health crisis, please contact a professional.</h3>
 
     <br>
-    <div class="container-fluid">
+    <div class="container-fluid rounded" id="article-div">
         <div class="row row-cols-2">
             <div class="col">
                 <h2>Mental Health Advice</h2>
-                <br><br>
                 {% if mental_health_advice %}
+                <ul>
                     {% for article in mental_health_advice %}
-                        <a href="{{ article.url }}">{{ article.title }}</a>
+                        
+                        <li><a href="{{ article.url }}">{{ article.title }}</a></li>
                     {% endfor %}
+                </ul>
                 {% else %}
                     No articles for Mental Health Advice! Why not submit your own?
                 {% endif %}
@@ -27,11 +32,12 @@
 
             <div class="col">
                 <h2>Meditation</h2>
-                <br><br>
                 {% if meditation %}
+                <ul>
                     {% for article in meditation %}
-                        <a href="{{ article.url }}">{{ article.title }}</a>
+                        <li></li><a href="{{ article.url }}">{{ article.title }}</a></li>
                     {% endfor %}
+                </ul>
                 {% else %}
                     No articles for Meditation! Why not submit your own?
                 {% endif %}
@@ -39,11 +45,12 @@
 
             <div class="col">
                 <h2>Mindfulness</h2>
-                <br><br>
                 {% if mindfulness %}
+                <ul>
                     {% for article in mindfulness %}
-                        <a href="{{ article.url }}">{{ article.title }}</a>
+                        <li><a href="{{ article.url }}">{{ article.title }}</a></li>
                     {% endfor %}
+                </ul>
                 {% else %}
                     No articles for Mindfulness! Why not submit your own?
                 {% endif %}
@@ -51,11 +58,12 @@
 
             <div class="col">
                 <h2>Sleep</h2>
-                <br><br>
                 {% if sleep %}
+                <ul>
                     {% for article in sleep %}
-                        <a href="{{ article.url }}">{{ article.title }}</a>
+                        <li><a href="{{ article.url }}">{{ article.title }}</a></li>
                     {% endfor %}
+                </ul>
                 {% else %}
                     No articles for Sleep! Why not submit your own?
                 {% endif %}
@@ -63,11 +71,12 @@
 
             <div class="col">
                 <h2>Stress</h2>
-                <br><br>
                 {% if stress %}
+                <ul>
                     {% for article in stress %}
-                        <a href="{{ article.url }}">{{ article.title }}</a>
+                        <li><a href="{{ article.url }}">{{ article.title }}</a></li>
                     {% endfor %}
+                </ul>
                 {% else %}
                     No articles for Stress! Why not submit your own?
                 {% endif %}

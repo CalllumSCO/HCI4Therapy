@@ -16,7 +16,6 @@ canvas {
     margin-bottom: 0;
 }
 
-
 .btn-primary{
     padding:4px;
 }
@@ -35,12 +34,6 @@ canvas {
     color: white;
 }
 
-.btn{
-    padding: 20px;
-    background-color:#AFE1AF;
-    margin:auto;
-}
-
 #user-icon{
     padding:10px;
     padding-left:50px;
@@ -54,6 +47,12 @@ canvas {
 }
 
 #about-div{
+    background-color: white;
+    border: 3px solid black;
+    padding: 20px;
+}
+
+#article-div{
     background-color: white;
     border: 3px solid black;
     padding: 20px;
@@ -78,6 +77,7 @@ canvas {
     color:#AFE1AF;
     
 }
+
 
 /* The side navigation menu */
 .sidenav {
