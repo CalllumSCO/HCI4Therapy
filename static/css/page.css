@@ -19,8 +19,6 @@ canvas {
 footer {
   position: fixed;
   bottom: 0;
-  align-items: center;
-  background-color: #ffffff;
 }
 
 
@@ -42,12 +40,6 @@ footer {
     color: white;
 }
 
-.btn{
-    padding: 20px;
-    background-color:#AFE1AF;
-    margin:auto;
-}
-
 #user-icon{
     padding:10px;
     padding-left:50px;
@@ -61,6 +53,12 @@ footer {
 }
 
 #about-div{
+    background-color: white;
+    border: 3px solid black;
+    padding: 20px;
+}
+
+#article-div{
     background-color: white;
     border: 3px solid black;
     padding: 20px;
@@ -85,6 +83,7 @@ footer {
     color:#AFE1AF;
     
 }
+
 
 /* The side navigation menu */
 .sidenav {
@@ -141,4 +140,15 @@ footer {
     justify-content : center
 }
 
+#top-nav-btn{
+  margin-bottom: .5rem;
+  margin-left: .5rem;
+  margin-right: .5rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
 
+}
+
+#sidebar-btn{
+  visibility: visible;
+}
