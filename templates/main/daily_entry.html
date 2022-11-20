@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    About
+{% endblock %}
+
+{% block body %}
+<div class="rounded" id="about-div">
+    <div class="text-center">
+        <a href="{% url 'new_entry' %}">
+        <button type="button" class="btn btn-outline-success btn-block w-50" style="font-size: 24px">
+            Log Emotions
+        </button>
+        </a>
+
+        <a href="{% url 'new_activity_entry' %}">
+        <button type="button" class="btn btn-outline-danger btn-block w-50" style="font-size: 24px">
+            Log Activity
+        </button>
+        </a>
+    </div>
+</div>
+{% endblock %}

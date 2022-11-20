@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from .models import Entry, Article
+from .models import Entry, Article, ActivityEntry, Activity
 from django import forms
 
 
@@ -83,3 +83,28 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ('title', 'category', 'description', 'url')
+
+def generate_activity_choices():
+    choices = ()
+    activities = list(Activity.objects.values('activity'))
+    i = 1
+    for a in activities:
+        val = list(a.values())
+        print(val)
+        choice = (str(i), val[0])
+        choices = choices + (choice,)
+    print(choices)
+
+    return choices
+
+
+class ActivityEntryForm(forms.ModelForm):
+    activity = forms.ChoiceField(choices=generate_activity_choices(),
+                                 help_text="Please enter the activity you wish to log")
+    time = forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1720)],
+                              help_text="Please enter the duration of this task.")
+
+    class Meta:
+        model = ActivityEntry
+        fields = ('activity', 'time')
+

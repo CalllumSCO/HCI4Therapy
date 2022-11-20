@@ -7,14 +7,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.urls import reverse
 
-from .forms import EntryForm, ArticleForm
-from .models import Entry, Article
+from .forms import EntryForm, ArticleForm, ActivityEntryForm
+from .models import Entry, Article, Activity, ActivityEntry
 
 
 # Create your views here.
 
 def index(request):
     context = {}
+    print(list(Activity.objects.values('activity')))
     if request.user.is_authenticated:
         entries = Entry.objects.filter(creator=request.user)
         context['entries'] = entries
@@ -139,7 +140,66 @@ def edit_entry(request, entry_slug):
 
     return render(request, 'main/edit_entry.html', context = context_dict)
 
+@login_required
+def new_activity_entry(request):
+    form = ActivityEntryForm()
 
+    if request.method == 'POST':
+        form = ActivityEntryForm(request.POST)
+        creator = request.user
+        url = generate_random_slug()
+
+        entry = form.save(commit=False)
+
+        entry.creator = creator
+        entry.url = url
+        form.save(commit=True)
+        return redirect('index')
+
+    context = {
+        'title': 'Add New Activity Entry',
+        'form': form
+    }
+
+    return render(request, "main/new_activity_entry.html", context=context)
+
+@login_required
+def view_activity_entry(request, entry_slug):
+    context_dict = {}
+
+    context_dict['user'] = request.user
+
+    try:
+        entry = ActivityEntry.objects.get(url=entry_slug)
+        context_dict['entry'] = entry
+    except Entry.DoesNotExist:
+        context_dict['entry'] = None
+
+    return render(request, 'main/view_activity_entry.html', context=context_dict)
+
+@login_required
+def edit_activity_entry(request, entry_slug):
+    # View to edit entries
+
+    try:
+        # Try and get the entry being edited by searching by entry_slug
+        editing = ActivityEntry.objects.get(url = entry_slug)
+        form = ActivityEntryForm(instance=editing)
+
+        if request.method == 'POST':
+            form = ActivityEntryForm(instance=editing)
+            if form.is_valid():
+                entry = form.save()
+            return HttpResponseRedirect(reverse('main:index'))
+
+        context_dict = {'form': form, 'instance': editing}
+    except Entry.DoesNotExist:
+        context_dict = {'form': None, 'instance': None}
+
+    return render(request, 'main/edit_activity_entry.html', context = context_dict)
+@login_required
+def daily_entry(request):
+    return render(request, "main/daily_entry.html")
 
 
 def generate_random_slug():

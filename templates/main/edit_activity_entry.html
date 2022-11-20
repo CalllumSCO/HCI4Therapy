@@ -1,12 +1,13 @@
 {% extends "main/base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}
-    Log In
+    Edit Activity Entry
 {% endblock %}
 
 {% block body %}
     <div>
-    <h1>Create a New Entry</h1>
+    {% if instance %}
+    <h1>Edit Entry</h1>
     <div class='textform'>
         <form id="deck_form" method="post" action="{% url 'new_activity_entry' %}" enctype="multipart/form-data">
 
@@ -23,6 +24,10 @@
             <input type="submit" name="submit" class="btn btn-success" value="Create" />
         </form>
     </div>
+    {% else %}
+    <h1>The specified entry does not exist</h1>
+    <a class = "btn btn-outline-info float-center" href="{%url 'index'%}">Back to Home Page</a>
+    {% endif %}
 </div>
 
 {% endblock %}

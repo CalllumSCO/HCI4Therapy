@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}
-    Log In
+    Edit Entry
 {% endblock %}
 
 {% block body %}
@@ -26,7 +26,7 @@
     </div>
     {% else %}
     <h1>The specified entry does not exist</h1>
-    <a class = "btn btn-outline-info float-center" href="{%url 'main:index'%}">Back to Home Page</a>
+    <a class = "btn btn-outline-info float-center" href="{%url 'index'%}">Back to Home Page</a>
     {% endif %}
 </div>
 
