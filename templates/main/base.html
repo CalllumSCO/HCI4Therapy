@@ -98,27 +98,29 @@
     <br>
 
     <footer>
-        <ul>
-
-        <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled justify-content-center align-items-center">
-            <li class="nav-item px-2 text-muted">
-                <a href="{% url 'index' %}">Homepage</a>
-            </li>
-            <li class="nav-item px-2 text-muted">
-                <a href="{% url 'about' %}">About</a>
-            </li>
-            <li class="nav-item px-2 text-muted">
-                <a href="{% url 'self_help' %}">Self-Help Advice</a>
-            </li>
-            <li class="nav-item px-2 text-muted">
-                <a href="{% url 'settings' %}">Site Settings</a>
-            </li>
-            <li class="nav-item px-2 text-muted">
-                <a href="{% url 'disclaimer' %}">Disclaimer</a>
-            </li>
-        </nav>
-
-        </ul>
+        <span>
+            <ul>
+                <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled justify-content-center align-items-center">
+                    <li class="nav-item px-2 text-muted">
+                        <a href="{% url 'index' %}">Homepage</a>
+                    </li>
+                    <li class="nav-item px-2 text-muted">
+                        <a href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item px-2 text-muted">
+                        <a href="{% url 'self_help' %}">Self-Help Advice</a>
+                    </li>
+                    <li class="nav-item px-2 text-muted">
+                        <a href="{% url 'settings' %}">Site Settings</a>
+                    </li>
+                    <li class="nav-item px-2 text-muted">
+                        <a href="{% url 'disclaimer' %}">Disclaimer</a>
+                    </li>
+                </nav>
+        
+                </ul>
+            </span>
+        
     </footer>
     </div>
     <!-- Optional JavaScript -->
