@@ -28,7 +28,6 @@ canvas {
 
 #main-nav{
     background-color:transparent;
-
     margin-bottom:25px;
 }
 
@@ -53,6 +52,25 @@ canvas {
 #user-hi{
     padding:20px;
 }
+
+#about-div{
+    background-color: white;
+    border: 3px solid black;
+    padding: 20px;
+}
+
+#wheel-img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width:20%;
+    height:auto;
+    transition: transform .2s;
+}
+
+#wheel-img:hover {
+    transform: scale(2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
 
 .fas{
     width:200%;

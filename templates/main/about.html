@@ -1,9 +1,20 @@
 {% extends 'main/base.html' %}
 
+{% load static %}
+
 {% block title %}
     About
 {% endblock %}
 
 {% block body %}
-    <h2>This is the about page, more content to come soon.</h2>
+<div class="rounded" id="about-div">
+    <h2>What is emote.it?</h2>
+    <p>The goal of emote.it is to allow users to log their day-to-day emotional state, as well as the types of activities they did.
+        This day-to-day data can then be visualised and viewed by users to help them practice mindfulness and reflection on how they are, and have been, feeling.
+        Users can determine patterns of positive and negative emotions on certain days, and corresponding to different types of activities to help with overall awareness and control over themselves.
+    </p>
+    <p>
+        Our emotion logging system is inspired by the concept of the <a href="https://www.mindbodygreen.com/articles/emotion-wheel">"wheel of emotions" or "feelings wheel"</a>, which allows us to narrow down the emotions into easily understandable sections of the wheel when asking users how they feel.
+    </p>
+    <img src="{% static 'wheel.webp' %}" id="wheel-img">
 {% endblock %}
