@@ -149,12 +149,13 @@ def new_activity_entry(request):
         creator = request.user
         url = generate_random_slug()
 
-        entry = form.save(commit=False)
+        entry = form
 
-        entry.creator = creator
-        entry.url = url
-        form.save(commit=True)
-        return redirect('index')
+        if form.is_valid():
+            entry.creator = creator
+            entry.url = url
+            form.save(commit=True)
+            return redirect('index')
 
     context = {
         'title': 'Add New Activity Entry',
