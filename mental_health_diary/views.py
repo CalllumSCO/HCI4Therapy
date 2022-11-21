@@ -149,7 +149,7 @@ def new_activity_entry(request):
         creator = request.user
         url = generate_random_slug()
 
-        entry = form
+        entry = form.save(commit=False)
 
         if form.is_valid():
             entry.creator = creator

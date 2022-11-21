@@ -16,7 +16,7 @@ class ActivityType(models.Model):
         return self.type
 
 class Activity(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True, editable=True)
     activity = models.CharField(max_length=64)
     type = models.ForeignKey(ActivityType, on_delete=models.CASCADE, null=True, unique=False)
     def __str__(self):
@@ -37,8 +37,6 @@ class ActivityEntry(models.Model):
 
     class Meta:
         verbose_name_plural = "Activity Entries"
-    def __str__(self):
-        return self.url
 
 class Entry(models.Model):
     id = models.AutoField(primary_key=True)

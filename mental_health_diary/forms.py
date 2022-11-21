@@ -84,6 +84,7 @@ class ArticleForm(forms.ModelForm):
         model = Article
         fields = ('title', 'category', 'description', 'url')
 
+
 def generate_activity_choices():
     choices = ()
     activities = list(Activity.objects.values('activity'))
@@ -91,20 +92,22 @@ def generate_activity_choices():
     for a in activities:
         val = list(a.values())
         print(val)
-        choice = (str(i), val[0])
+        choice = (str(i), Activity.objects.get(activity=val[0]))
         choices = choices + (choice,)
+        i += 1
     print(choices)
 
     return choices
 
 
 class ActivityEntryForm(forms.ModelForm):
-    activity = forms.ChoiceField(choices=generate_activity_choices(),
-                                 help_text="Please enter the activity you wish to log")
+    activity = forms.ModelChoiceField(queryset=Activity.objects.all().order_by('activity'), label='Select Activity',
+                                 widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Activity'}),
+                                 help_text="Choose an Activity")
+
     time = forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1720)],
                               help_text="Please enter the duration of this task.")
 
     class Meta:
         model = ActivityEntry
         fields = ('activity', 'time')
-
