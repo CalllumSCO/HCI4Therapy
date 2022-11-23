@@ -1,10 +1,11 @@
 import random
+from datetime import date, timedelta
 
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .forms import EntryForm, ArticleForm, ActivityEntryForm
@@ -15,10 +16,13 @@ from .models import Entry, Article, Activity, ActivityEntry
 
 def index(request):
     context = {}
-    print(list(Activity.objects.values('activity')))
+    today = date.today()
+    seven_days_before = today - timedelta(days=7)
     if request.user.is_authenticated:
-        entries = Entry.objects.filter(creator=request.user)
+        entries = Entry.objects.filter(creator=request.user, date__gte=seven_days_before).order_by('-date')
         context['entries'] = entries
+        activity_entries = ActivityEntry.objects.filter(creator=request.user, date__gte=seven_days_before).order_by('-date')
+        context['activities'] = activity_entries
     return render(request, 'main/index.html', context=context)
 
 
@@ -72,12 +76,14 @@ def new_entry(request):
         form = EntryForm(request.POST)
         creator = request.user
         url = generate_random_slug()
+        today = date.today()
 
         entry = form.save(commit=False)
 
         if form.is_valid():
             entry.creator = creator
             entry.url = url
+            entry.date = today
             form.save(commit=True)
             return redirect('index')
 
