@@ -1,14 +1,14 @@
 {% extends "main/base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}
-    Log In
+    New Entry
 {% endblock %}
 
 {% block body %}
     <div>
     <h1>Create a New Entry</h1>
     <div class='textform'>
-        <form id="deck_form" method="post" action="{% url 'new_activity_entry' %}" enctype="multipart/form-data">
+        <form id="deck_form" method="post" action="{% url 'new_entry' %}" enctype="multipart/form-data">
 
             {% csrf_token %}
 

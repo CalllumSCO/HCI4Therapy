@@ -55,11 +55,9 @@ class EntryForm(forms.ModelForm):
                                                                'min': -5,
                                                                'max': 5}))
 
-    url = forms.CharField(widget=forms.HiddenInput(), required=False)
-
     class Meta:
         model = Entry
-        fields = ('happiness', 'anger', 'disgust', 'fear', 'power', 'peace', 'url')
+        fields = ('happiness', 'anger', 'disgust', 'fear', 'power', 'peace')
 
 
 article_category_choices = (

@@ -31,11 +31,11 @@ def about(request):
 
 
 def self_help(request):
-    MentalHealthAdvice = Article.objects.filter(category="1")
-    Meditation = Article.objects.filter(category="2")
-    Mindfulness = Article.objects.filter(category="3")
-    Sleep = Article.objects.filter(category="4")
-    Stress = Article.objects.filter(category="5")
+    MentalHealthAdvice = Article.objects.filter(category="Mental Health Advice")
+    Meditation = Article.objects.filter(category="Meditation")
+    Mindfulness = Article.objects.filter(category="Mindfulness")
+    Sleep = Article.objects.filter(category="Sleep")
+    Stress = Article.objects.filter(category="Stress")
 
     context = {
         "mental_health_advice": MentalHealthAdvice,
@@ -77,7 +77,6 @@ def new_entry(request):
         creator = request.user
         url = generate_random_slug()
         today = date.today()
-
         entry = form.save(commit=False)
 
         if form.is_valid():
