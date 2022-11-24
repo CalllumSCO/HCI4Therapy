@@ -69,7 +69,7 @@ def register(request):
 
 def new_entry(request):
 
-    existing_log = Entry.objects.filter(date=date.today())
+    existing_log = Entry.objects.filter(date=date.today(), creator=request.user)
     if existing_log:
         messages.warning(request, "You've already made an emotion log today! Come back tomorrow, or log some activities!")
         return redirect('daily_entry')
