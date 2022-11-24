@@ -8,26 +8,36 @@
 
     {% if entry and entry.creator == user %}
     <div class = "container-fluid rounded" id="about-div">
-        <div class = "container-fluid rounded" style="background-color:goldenrod" id="emotion-div">
-        Happiness = {{ entry.happiness }}
-        </div>
-        <div class = "container-fluid rounded" style="background-color:red" id="emotion-div">
-        Anger = {{ entry.anger }}
-        </div>
-        <div class = "container-fluid rounded" style="background-color:rgb(147, 71, 157)" id="emotion-div">
-        Disgust = {{ entry.disgust }}
-        </div>
-        <div class = "container-fluid rounded" style="background-color:rgb(88, 174, 152)" id="emotion-div">
-        Fear = {{ entry.fear}}
-        </div>
-        <div class = "container-fluid rounded" style="background-color:rgb(255, 68, 0)" id="emotion-div">
-        Power = {{ entry.power }}
-        </div>
-        <div class = "container-fluid rounded" style="background-color:rgb(106, 255, 0)" id="emotion-div">
-        Peace = {{ entry.peace }}
-        </div>
+        Emotion Entries
+        <canvas id="barEmotions" style="width:100%;max-width:700px"></canvas>
     </div>
     {% else %}
         <h2>Entry cannot be accessed! Create one <a href="{% url 'new_entry' %}">here</a></h2>
     {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        var xValues = ["Happiness", "Anger", "Disgust", "Fear", "Power", "Peace"];
+        var yValues = ['{{ entry.happiness }}', '{{ entry.anger }}', '{{entry.disgust}}', '{{entry.fear}}', '{{entry.power}}', '{{entry.peace}}'];
+        var barColors = ["yellow", "red","blue","purple","orange", "green"];
+
+        var barEmotions = new Chart("barEmotions", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Emotion Entries'
+                    }
+                }
+            }
+        });
+    </script>
 {% endblock %}
