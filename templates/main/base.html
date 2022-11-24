@@ -32,6 +32,7 @@
         <a href="{% url 'about' %}">About</a>
         <a href="{% url 'self_help' %}">Resources</a>
         {% if user.is_authenticated %}
+        <a href="{% url 'all-logs' %}">All Logs</a>
         <a href="{% url 'new_entry' %}">New Log</a>
         <a href="{% url 'logout' %}">Logout</a>
         {% else %}
@@ -72,7 +73,11 @@
             </button>
             </a>
             {% if user.is_authenticated %}
-
+            <a href="{% url 'all-logs' %}">
+                <button type="button" id="top-nav-btn" class="btn btn-light mr-1 btn-lg active border-2 border-dark" id="top-nav-btn" aria-pressed="true" aria-label="Right Align" >All Logs
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                </button>
+                </a>
             <a href="{% url 'new_entry' %}">
                 <button type="button" id="top-nav-btn" class="btn btn-light mr-1 btn-lg active border-2 border-dark" id="top-nav-btn" aria-pressed="true" aria-label="Right Align" >New Log
                     <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
