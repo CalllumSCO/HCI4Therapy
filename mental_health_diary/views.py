@@ -146,7 +146,7 @@ def edit_entry(request, entry_slug):
             form = EntryForm(instance=editing)
             if form.is_valid():
                 entry = form.save()
-            return HttpResponseRedirect(reverse('main:index'))
+            return redirect('index')
 
         context_dict = {'form': form, 'instance': editing}
     except Entry.DoesNotExist:
@@ -205,7 +205,7 @@ def edit_activity_entry(request, entry_slug):
             form = ActivityEntryForm(instance=editing)
             if form.is_valid():
                 entry = form.save()
-            return HttpResponseRedirect(reverse('main:index'))
+            return HttpResponseRedirect(reverse('index'))
 
         context_dict = {'form': form, 'instance': editing}
     except Entry.DoesNotExist:
