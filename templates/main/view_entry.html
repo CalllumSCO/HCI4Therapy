@@ -8,8 +8,32 @@
 
     {% if entry and entry.creator == user %}
     <div class = "container-fluid rounded" id="about-div">
-        Emotion Entries
+        <h1>Emotional Log for <strong>{{entry.date}}</strong></h1>
+        <hr>
+        <div class="row">
+            <div class="col">
+        <h2>Mood Metrics for Today</h2>
         <canvas id="barEmotions" style="width:100%;max-width:700px"></canvas>
+    </div>
+<div class="col">
+
+        <h2>Today's Activities    <a href="{% url 'new_activity_entry' %}" class="btn btn-dark justify-content-end">Create New</a></h2>
+        {%if activities %}
+        <ul>
+            {% for activity in activities %}
+            <div id="about-div">
+                <h3>{{activity.activity}}</h3>
+                <h4>{{activity.time}} Minutes</h4>
+
+                <a href="{% url 'edit_activity_entry' activity.url %}" class="btn btn-dark justify-content-end">Edit</a>
+            </div>
+            {%endfor%}
+        </ul>
+        {% else %}
+        <h3>No Activities entered for today</h3>
+        {% endif %}
+    </div>
+    </div>
     </div>
     {% else %}
         <h2>Entry cannot be accessed! Create one <a href="{% url 'new_entry' %}">here</a></h2>
@@ -24,7 +48,7 @@
         var barEmotions = new Chart("barEmotions", {
             type: "bar",
             data: {
-                labels: xValues,
+                labels: ["Happiness", "Anger", "Disgust", "Fear", "Power", "Peace"],
                 datasets: [{
                     backgroundColor: barColors,
                     data: yValues

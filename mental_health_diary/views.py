@@ -123,7 +123,9 @@ def view_entry(request, entry_slug):
 
     try:
         entry = Entry.objects.get(url=entry_slug)
+        activities = ActivityEntry.objects.filter(creator=entry.creator, date=entry.date)
         context_dict['entry'] = entry
+        context_dict['activities'] = activities
     except Entry.DoesNotExist:
         context_dict['entry'] = None
 
