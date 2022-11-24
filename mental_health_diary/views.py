@@ -27,8 +27,16 @@ def index(request):
         context['today'] = Entry.objects.filter(creator=request.user, date=today).order_by('-date')
         print(context['today'])
         context['entries'] = entries
+        moods = []
+        for e in entries:
+            moods.append(e.mood)
+        context['moods'] = moods
         activity_entries = ActivityEntry.objects.filter(creator=request.user, date__gte=seven_days_before).order_by('-date')
         context['activities'] = activity_entries
+        times = []
+        for a in activity_entries:
+            times.append(a.time)
+        context['times'] = times
     return render(request, 'main/index.html', context=context)
 
 
@@ -146,7 +154,9 @@ def view_entry(request, entry_slug):
 
     try:
         entry = Entry.objects.get(url=entry_slug)
+        activities = ActivityEntry.objects.filter(creator=entry.creator, date=entry.date)
         context_dict['entry'] = entry
+        context_dict['activities'] = activities
     except Entry.DoesNotExist:
         context_dict['entry'] = None
 
