@@ -49,6 +49,11 @@ class Entry(models.Model):
     power = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
     peace = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
     mood = models.FloatField(default=0)
+    best_moment = models.TextField(max_length=500, requried=False)
+    share_best = models.TextField(max_length=500, required=False)
+    worst_moment = models.TextField(max_length=500, required=False)
+    deal_worst = models.TextField(max_length=500, required=False)
+    coping_mech = models.Text
     url = models.CharField(null=True, max_length=10)
     class Meta:
         verbose_name_plural = "Entries"
