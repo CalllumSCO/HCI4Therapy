@@ -51,6 +51,12 @@ canvas {
     padding:20px;
 }
 
+#emotion-div{
+  padding:20px;
+  font-weight: bolder;
+  margin: 10px;
+}
+
 #about-div{
     background-color: white;
     border: 3px solid black;
