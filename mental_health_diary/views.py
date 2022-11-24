@@ -77,7 +77,7 @@ def register(request):
 
 def new_entry(request):
 
-    existing_log = Entry.objects.filter(date=date.today())
+    existing_log = Entry.objects.filter(date=date.today(), creator=request.user)
     if existing_log:
         messages.warning(request, "You've already made an emotion log today! Come back tomorrow, or log some activities!")
         return redirect('daily_entry')
@@ -131,7 +131,9 @@ def view_entry(request, entry_slug):
 
     try:
         entry = Entry.objects.get(url=entry_slug)
+        activities = ActivityEntry.objects.filter(creator=entry.creator, date=entry.date)
         context_dict['entry'] = entry
+        context_dict['activities'] = activities
     except Entry.DoesNotExist:
         context_dict['entry'] = None
 
@@ -151,10 +153,10 @@ def edit_entry(request, entry_slug):
         form = EntryForm(instance=editing)
 
         if request.method == 'POST':
-            form = EntryForm(instance=editing)
+            form = EntryForm(request.POST, instance=editing)
             if form.is_valid():
                 entry = form.save()
-            return HttpResponseRedirect(reverse('main:index'))
+            return redirect('index')
 
         context_dict = {'form': form, 'instance': editing}
     except Entry.DoesNotExist:
@@ -210,10 +212,10 @@ def edit_activity_entry(request, entry_slug):
         form = ActivityEntryForm(instance=editing)
 
         if request.method == 'POST':
-            form = ActivityEntryForm(instance=editing)
+            form = ActivityEntryForm(request.POST, instance=editing)
             if form.is_valid():
                 entry = form.save()
-            return HttpResponseRedirect(reverse('main:index'))
+            return HttpResponseRedirect(reverse('index'))
 
         context_dict = {'form': form, 'instance': editing}
     except Entry.DoesNotExist:

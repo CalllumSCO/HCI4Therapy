@@ -9,7 +9,7 @@
     {% if instance %}
     <h1>Edit Entry</h1>
     <div class='textform'>
-        <form id="deck_form" method="post" action="{% url 'new_entry' %}" enctype="multipart/form-data">
+        <form id="deck_form" method="post" action="{% url 'edit_entry' instance.url %}" enctype="multipart/form-data">
 
             {% csrf_token %}
 
@@ -21,7 +21,7 @@
                 {{ field|as_crispy_field }}
             {% endfor %}
 
-            <input type="submit" name="submit" class="btn btn-success" value="Create" />
+            <input type="submit" name="submit" class="btn btn-success" value="Update" />
         </form>
     </div>
     {% else %}
