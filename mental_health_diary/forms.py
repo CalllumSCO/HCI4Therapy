@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from .models import Entry, Article
+from .models import Entry, Article, ActivityEntry, Activity
 from django import forms
 
 
@@ -55,11 +55,9 @@ class EntryForm(forms.ModelForm):
                                                                'min': -5,
                                                                'max': 5}))
 
-    url = forms.CharField(widget=forms.HiddenInput(), required=False)
-
     class Meta:
         model = Entry
-        fields = ('happiness', 'anger', 'disgust', 'fear', 'power', 'peace', 'url')
+        fields = ('happiness', 'anger', 'disgust', 'fear', 'power', 'peace')
 
 
 article_category_choices = (
@@ -75,11 +73,36 @@ class ArticleForm(forms.ModelForm):
     title = forms.CharField(max_length=256, help_text="Please enter the title for your article",
                             widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}))
     category = forms.ChoiceField(choices=article_category_choices)
-    description = forms.CharField(max_length=512, help_text="Enter a description of the article",
-                                  widget=forms.Textarea(
-                                      attrs={'class': 'form-control', 'placeholder': 'A description of the article'}))
     url = forms.URLField(max_length=200)
 
     class Meta:
         model = Article
-        fields = ('title', 'category', 'description', 'url')
+        fields = ('title', 'category', 'url')
+
+
+def generate_activity_choices():
+    choices = ()
+    activities = list(Activity.objects.values('activity'))
+    i = 1
+    for a in activities:
+        val = list(a.values())
+        print(val)
+        choice = (str(i), Activity.objects.get(activity=val[0]))
+        choices = choices + (choice,)
+        i += 1
+    print(choices)
+
+    return choices
+
+
+class ActivityEntryForm(forms.ModelForm):
+    activity = forms.ModelChoiceField(queryset=Activity.objects.all().order_by('activity'), label='Select Activity',
+                                 widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Activity'}),
+                                 help_text="Choose an Activity")
+
+    time = forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1720)],
+                              help_text="Please enter the duration of this task.")
+
+    class Meta:
+        model = ActivityEntry
+        fields = ('activity', 'time')
