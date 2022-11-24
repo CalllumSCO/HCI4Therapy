@@ -143,7 +143,7 @@ def edit_entry(request, entry_slug):
         form = EntryForm(instance=editing)
 
         if request.method == 'POST':
-            form = EntryForm(instance=editing)
+            form = EntryForm(request.POST, instance=editing)
             if form.is_valid():
                 entry = form.save()
             return redirect('index')
@@ -202,7 +202,7 @@ def edit_activity_entry(request, entry_slug):
         form = ActivityEntryForm(instance=editing)
 
         if request.method == 'POST':
-            form = ActivityEntryForm(instance=editing)
+            form = ActivityEntryForm(request.POST, instance=editing)
             if form.is_valid():
                 entry = form.save()
             return HttpResponseRedirect(reverse('index'))
