@@ -25,7 +25,6 @@ def populate(silent=False):
         {"type": "Mindfulness"},
         {"type": "Hobbies"},
         {"type": "Creative"},
-        {"type": "Family"},
     ]
 
     for t in ActivityTypes:
@@ -63,10 +62,6 @@ def populate(silent=False):
          'type': ActivityType.objects.get(type="Creative")},
         {'activity': 'Creating Art',
          'type': ActivityType.objects.get(type="Creative")},
-        {'activity': 'Family Time',
-         'type': ActivityType.objects.get(type="Family")},
-        {'activity': 'Caring for Children',
-         'type': ActivityType.objects.get(type="Family")}
     ]
 
     for activity in Activities:
@@ -228,6 +223,7 @@ def populate(silent=False):
          'fear': -3,
          'power': 3,
          'peace': 4,
+         'mood': (4 + 3 + 4 - (-2 + -4 + -3))/6,
          'url': generate_random_slug()},
         {'date': date(2022, 11, 22),
          'creator': user,
@@ -237,6 +233,7 @@ def populate(silent=False):
          'fear': -2,
          'power': 0,
          'peace': 3,
+         'mood': (2 + 0 + 3 -(1 + -2 + -2))/6,
          'url': generate_random_slug()},
         {'date': date(2022, 11, 21),
          'creator': user,
@@ -246,6 +243,7 @@ def populate(silent=False):
          'fear': -2,
          'power': 1,
          'peace': 2,
+         'mood': (0 + 1 + 2 - (-2))/6,
          'url': generate_random_slug()},
         {'date': date(2022, 11, 20),
          'creator': user,
@@ -255,6 +253,7 @@ def populate(silent=False):
          'fear': 1,
          'power': -2,
          'peace': 0,
+         'mood': (-1 + -2 - 1)/6,
          'url': generate_random_slug()},
         {'date': date(2022, 11, 19),
          'creator': user,
@@ -264,6 +263,7 @@ def populate(silent=False):
          'fear': 0,
          'power': -1,
          'peace': -2,
+         'mood': (1 -1 -1 -(4 + 3 + 0))/6,
          'url': generate_random_slug()},
         {'date': date(2022, 11, 18),
          'creator': user,
@@ -273,6 +273,7 @@ def populate(silent=False):
          'fear': 0,
          'power': -1,
          'peace': -2,
+         'mood': (-3 -1 -1 -(2 + 2))/6,
          'url': generate_random_slug()},
         {'date': date(2022, 11, 17),
          'creator': user,
@@ -282,12 +283,14 @@ def populate(silent=False):
          'fear': 0,
          'power': -3,
          'peace': -3,
+         'mood' : (-4 -3 -3 -(2 + 1))/6,
          'url': generate_random_slug()},
     ]
 
     for e in Entries:
+        print(e['mood'])
         entries = add_entry(e['date'], e['creator'], e['happiness'], e['anger'],
-                            e['disgust'], e['fear'], e['power'], e['peace'], e['url'])
+                            e['disgust'], e['fear'], e['power'], e['peace'], e['mood'], e['url'])
 
     Articles = [
         {'title': 'How to be Happy',
@@ -357,9 +360,9 @@ def add_activity_entry(time, activity, date, creator, url):
     return entry
 
 
-def add_entry(date, creator, happiness, anger, disgust, fear, power, peace, url):
+def add_entry(date, creator, happiness, anger, disgust, fear, power, peace, mood, url):
     entry = Entry.objects.create(date=date, creator=creator, happiness=happiness, anger=anger,
-                                 disgust=disgust, fear=fear, power=power, peace=peace, url=url)
+                                 disgust=disgust, fear=fear, power=power, peace=peace, mood=mood, url=url)
     return entry
 
 

@@ -20,6 +20,12 @@ def index(request):
     seven_days_before = today - timedelta(days=7)
     if request.user.is_authenticated:
         entries = Entry.objects.filter(creator=request.user, date__gte=seven_days_before).order_by('-date')
+        for e in entries:
+            if e.date == date.today():
+                entries = entries[1:]
+                break
+        context['today'] = Entry.objects.filter(creator=request.user, date=today).order_by('-date')
+        print(context['today'])
         context['entries'] = entries
         activity_entries = ActivityEntry.objects.filter(creator=request.user, date__gte=seven_days_before).order_by('-date')
         context['activities'] = activity_entries
@@ -48,14 +54,6 @@ def self_help(request):
     return render(request, 'main/self_help.html', context=context)
 
 
-def settings(request):
-    return render(request, 'main/settings.html')
-
-
-def disclaimer(request):
-    return render(request, 'main/disclaimer.html')
-
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -70,28 +68,35 @@ def register(request):
 
 
 def new_entry(request):
-    form = EntryForm()
 
-    if request.method == 'POST':
-        form = EntryForm(request.POST)
-        creator = request.user
-        url = generate_random_slug()
-        today = date.today()
-        entry = form.save(commit=False)
+    existing_log = Entry.objects.filter(date=date.today())
+    if existing_log:
+        messages.warning(request, "You've already made an emotion log today! Come back tomorrow, or log some activities!")
+        return redirect('daily_entry')
+    else:
+        form = EntryForm()
 
-        if form.is_valid():
-            entry.creator = creator
-            entry.url = url
-            entry.date = today
-            form.save(commit=True)
-            return redirect('index')
+        if request.method == 'POST':
+            form = EntryForm(request.POST)
+            creator = request.user
+            url = generate_random_slug()
+            today = date.today()
+            entry = form.save(commit=False)
 
-    context = {
-        'title': 'Add New Entry',
-        'form': form
-    }
+            if form.is_valid():
+                entry.mood = entry.power + entry.happiness + entry.peace - (entry.disgust + entry.anger + entry.fear)
+                entry.creator = creator
+                entry.url = url
+                entry.date = today
+                form.save(commit=True)
+                return redirect('index')
 
-    return render(request, "main/new_entry.html", context=context)
+        context = {
+            'title': 'Add New Entry',
+            'form': form
+        }
+
+        return render(request, "main/new_entry.html", context=context)
 
 
 def new_article(request):
@@ -128,9 +133,13 @@ def view_entry(request, entry_slug):
 def edit_entry(request, entry_slug):
     # View to edit entries
 
+    editing = Entry.objects.get(url=entry_slug)
+
+    if editing.date != date.today():
+        messages.warning(request, "Can't edit entries for previous days!")
+        return redirect('index')
     try:
         # Try and get the entry being edited by searching by entry_slug
-        editing = Entry.objects.get(url = entry_slug)
         form = EntryForm(instance=editing)
 
         if request.method == 'POST':

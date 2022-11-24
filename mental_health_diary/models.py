@@ -48,6 +48,7 @@ class Entry(models.Model):
     fear = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
     power = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
     peace = models.IntegerField(default=0, validators=[MinValueValidator(-5), MaxValueValidator(5)])
+    mood = models.FloatField(default=0)
     url = models.CharField(null=True, max_length=10)
     class Meta:
         verbose_name_plural = "Entries"

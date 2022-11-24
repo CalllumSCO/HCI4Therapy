@@ -20,6 +20,61 @@
     </div>
 <br><hr>
 
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+        {% if today %}
+            {% for d in today %}
+                <div class="card border-secondary mb-3">
+                <div class="card-header">Entries for Today </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled">
+                                <li class="nav-item">
+                                    <a href="entry/{{ d.url }}/"
+                                       class="btn btn-outline-info p" role="button">
+                                        View Entry
+                                    </a>
+                                </li>
+                                <li class="nav-item" style="margin-left: 20px">
+                                    <a href="edit-entry/{{ d.url }}/"
+                                    class="btn btn-outline-warning p" role="button">
+                                    Edit Entry
+                                    </a>
+                                </li>
+                            </nav>
+                        </div>
+                        <div class="col-sm">
+                            <div class="dropdown text-center">
+                                    <button class="btn btn-outline-dark justify-content-center align-items-center dropdown-toggle" type="button" id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        View/Edit Activity Logs
+                                    </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {% for activity in activities %}
+                                   {% if activity.date == d.date %}
+                                       <a class="dropdown-item" href="edit-activity-entry/{{ activity.url }}/">
+                                           {{ activity.activity }} - {{ activity.time }} minutes</a>
+                                   {% endif %}
+                                {% endfor %}
+                                <hr>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+            {% else %}
+                <h2 style="text-align: center">No entries to view yet!</h2>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6">
@@ -35,12 +90,6 @@
                                     <a href="entry/{{ entry.url }}/"
                                        class="btn btn-outline-info p" role="button">
                                         View Entry
-                                    </a>
-                                </li>
-                                <li class="nav-item" style="margin-left: 20px">
-                                    <a href="edit-entry/{{ entry.url }}/"
-                                    class="btn btn-outline-warning p" role="button">
-                                    Edit Entry
                                     </a>
                                 </li>
                             </nav>
