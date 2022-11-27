@@ -27,8 +27,16 @@ def index(request):
         context['today'] = Entry.objects.filter(creator=request.user, date=today).order_by('-date')
         print(context['today'])
         context['entries'] = entries
+        moods = []
+        for e in entries:
+            moods.append(e.mood)
+        context['moods'] = moods
         activity_entries = ActivityEntry.objects.filter(creator=request.user, date__gte=seven_days_before).order_by('-date')
         context['activities'] = activity_entries
+        times = []
+        for a in activity_entries:
+            times.append(a.time)
+        context['times'] = times
     return render(request, 'main/index.html', context=context)
 
 
@@ -97,6 +105,29 @@ def new_entry(request):
         }
 
         return render(request, "main/new_entry.html", context=context)
+    
+@login_required
+def view_all_logs(request):
+    context = {}
+
+    today = date.today()
+    if request.user.is_authenticated:
+        entries = Entry.objects.filter(creator=request.user).order_by('-date')
+        for e in entries:
+            if e.date == date.today():
+                entries = entries[1:]
+                break
+        context['today'] = Entry.objects.filter(creator=request.user, date=today).order_by('-date')
+        print(context['today'])
+        context['entries'] = entries
+        activity_entries = ActivityEntry.objects.filter(creator=request.user,).order_by('-date')
+        context['activities'] = activity_entries
+
+    return render(request, "main/all_logs.html", context=context)
+
+
+
+
 
 
 def new_article(request):
