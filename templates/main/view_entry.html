@@ -33,7 +33,91 @@
         <h3>No Activities entered for today</h3>
         {% endif %}
     </div>
-    </div>
+    </div> <hr>
+
+    {% if entry.best_moment != null or entry.best_moment == ""%}
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">What was your best moment today?</h4>
+                <hr>
+                <p class="card-text">  {{ entry.best_moment }}</p>
+            </div>
+        </div>
+        <br><br>
+
+    {% endif %}
+
+    {% if entry.share_best != null or entry.share_best == ""%}
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Did you share the moment with anyone else?</h4>
+                <hr>
+                <p class="card-text">  {{ entry.share_best }}</p>
+            </div>
+        </div>
+        <br><br>
+    {% endif %}
+
+    {% if entry.worst_moment != null or entry.worst_moment == ""%}
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">What was your worst moment today?</h4>
+                <hr>
+                <p class="card-text">{{ entry.worst_moment }}</p>
+            </div>
+        </div>
+        <br><br>
+
+    {% endif %}
+
+    {% if entry.deal_worst != null or entry.deal_worst == "" %}
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">How did you deal with it?</h4>
+                <hr>
+                <p class="card-text">{{ entry.deal_worst }}</p>
+            </div>
+        </div>
+
+        <br><br>
+
+
+    {% endif %}
+
+    {% if entry.coping_mech != null or entry.coping_mech == "" %}
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Did you use any coping mechanisms?</h4>
+                <hr>
+                <p class="card-text">{{ entry.coping_mech }}</p>
+            </div>
+        </div>
+
+        <br><br>
+    {% endif %}
+
+    {% if entry.anything_different != null or entry.anything_different == "" %}
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Was there anything you would have done differently today?</h4>
+                <hr>
+                <p class="card-text">{{ entry.anything_different }}</p>
+            </div>
+        </div>
+
+        <br><br>
+    {% endif %}
+
+    {% if entry.smile != null or entry.smile == ""%}
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">What made you smile today?</h4>
+                <hr>
+                <p class="card-text">{{ entry.smile }}</p>
+            </div>
+        </div>
+        <br><br>
+    {% endif %}
     </div>
     {% else %}
         <h2>Entry cannot be accessed! Create one <a href="{% url 'new_entry' %}">here</a></h2>

@@ -54,10 +54,34 @@ class EntryForm(forms.ModelForm):
                                                                'placeholder': '-5 - 5',
                                                                'min': -5,
                                                                'max': 5}))
+    best_moment = forms.CharField(required=False, max_length=500, help_text="What was your best moment today?",
+                                  widget=forms.Textarea(attrs={'class': 'form-control'}))
+
+    share_best = forms.CharField(required=False, max_length=500, help_text="Did you share the moment with anyone else?",
+                                 widget=forms.Textarea(
+                                     attrs={'class': 'form-control'}))
+    worst_moment = forms.CharField(required=False, max_length=500, help_text="What was your worst moment today?",
+                                   widget=forms.Textarea(
+                                       attrs={'class': 'form-control'}))
+    deal_worst = forms.CharField(required=False, max_length=500, help_text="How did you deal with it?",
+                                 widget=forms.Textarea(
+                                     attrs={'class': 'form-control'}))
+    coping_mech = forms.CharField(required=False, max_length=500, help_text="Did you use any coping mechanisms?",
+                                  widget=forms.Textarea(
+                                      attrs={'class': 'form-control'}))
+    anything_different = forms.CharField(required=False, max_length=500,
+                                         help_text="Was there anything you would have done differently today?",
+                                         widget=forms.Textarea(
+                                             attrs={'class': 'form-control'}))
+    smile = forms.CharField(required=False, max_length=500, help_text="What made you smile today?",
+                            widget=forms.Textarea(
+                                attrs={'class': 'form-control'}))
 
     class Meta:
         model = Entry
-        fields = ('happiness', 'anger', 'disgust', 'fear', 'power', 'peace')
+        fields = (
+        'happiness', 'anger', 'disgust', 'fear', 'power', 'peace', 'best_moment', 'share_best', 'worst_moment',
+        'deal_worst', 'coping_mech', 'anything_different', 'smile')
 
 
 article_category_choices = (
@@ -97,8 +121,8 @@ def generate_activity_choices():
 
 class ActivityEntryForm(forms.ModelForm):
     activity = forms.ModelChoiceField(queryset=Activity.objects.all().order_by('activity'), label='Select Activity',
-                                 widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Activity'}),
-                                 help_text="Choose an Activity")
+                                      widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Activity'}),
+                                      help_text="Choose an Activity")
 
     time = forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1720)],
                               help_text="Please enter the duration of this task.")

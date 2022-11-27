@@ -84,7 +84,7 @@ def new_entry(request):
             entry = form.save(commit=False)
 
             if form.is_valid():
-                entry.mood = entry.power + entry.happiness + entry.peace - (entry.disgust + entry.anger + entry.fear)
+                entry.mood = (entry.power + entry.happiness + entry.peace - (entry.disgust + entry.anger + entry.fear))/6
                 entry.creator = creator
                 entry.url = url
                 entry.date = today
