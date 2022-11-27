@@ -19,19 +19,27 @@
 
         <h2>Today's Activities    <a href="{% url 'new_activity_entry' %}" class="btn btn-dark justify-content-end">Create New</a></h2>
         {%if activities %}
-        <ul>
+        <div class="row row-cols-1 row-cols-md-4 m-1">
             {% for activity in activities %}
-            <div id="about-div">
-                <h3>{{activity.activity}}</h3>
-                <h4>{{activity.time}} Minutes</h4>
-
-                <a href="{% url 'edit_activity_entry' activity.url %}" class="btn btn-dark justify-content-end">Edit</a>
+            <div class="row">
+            <div class="card border border-dark m-1">
+                <div class="card-body">
+                <h5 class="card-title">{{activity.activity}}</h5>
+                <h6 class="card-subtitle">{{activity.time}} Minutes</h6>
+                    <h6 class="card-text text-muted">{{activity.activity.type}}</h6>
+                
             </div>
+            <a href="{% url 'edit_activity_entry' activity.url %}" class="btn btn-dark justify-content-end md-2">Edit</a>
+
+            </div></div>
             {%endfor%}
-        </ul>
+        </div>
         {% else %}
         <h3>No Activities entered for today</h3>
         {% endif %}
+        <br>
+        <h2>Total Minutes Per Activity Type</h2>
+        <canvas id="activityTimes" style="width:100%;max-width:700px"></canvas>
     </div>
     </div> <hr>
 
@@ -127,7 +135,7 @@
     <script>
         var xValues = ["Happiness", "Anger", "Disgust", "Fear", "Power", "Peace"];
         var yValues = ['{{ entry.happiness }}', '{{ entry.anger }}', '{{entry.disgust}}', '{{entry.fear}}', '{{entry.power}}', '{{entry.peace}}'];
-        var barColors = ["yellow", "red","blue","purple","orange", "green"];
+        var barColors = ["#e2b72f","#23abd8","#6e40aa","#52f667","#fe4b83","#ff7847","#4c6edb","#bf3caf","#1ddfa3","#6e40aa","#aff05b"];
 
         var barEmotions = new Chart("barEmotions", {
             type: "bar",
@@ -144,8 +152,40 @@
                         display: true,
                         text: 'Emotion Entries'
                     }
+                },
+                legend: {
+                    display: false
                 }
             }
         });
+    </script>
+    <script>
+    
+        var types = [{% for item in activity_types %}"{{item.activity__type__type}}",{%endfor%}];
+        var values = [{% for item in activity_types %} "{{item.total_time}}",{%endfor%}];
+        var colours = ["#6e40aa","#bf3caf","#fe4b83","#ff7847","#e2b72f","#aff05b","#52f667","#1ddfa3","#23abd8","#4c6edb","#6e40aa"]
+
+        var activityTimes = new Chart("activityTimes", {
+            type: 'polarArea',
+            data: {
+                labels: types,
+                datasets: [{labels: types,
+                    data: values,
+                backgroundColor: colours}]
+            },
+            options: {
+        responsive: true,
+        plugins: {
+        legend: {
+            position: 'right',
+        },
+        title: {
+            display: true,
+            text: 'Total Minutes Per Activity Type'
+        },
+        }
+    },
+        });
+
     </script>
 {% endblock %}

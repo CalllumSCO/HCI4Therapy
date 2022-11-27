@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.db.models import Sum
 
 from .forms import EntryForm, ArticleForm, ActivityEntryForm
 from .models import Entry, Article, Activity, ActivityEntry
@@ -155,8 +156,12 @@ def view_entry(request, entry_slug):
     try:
         entry = Entry.objects.get(url=entry_slug)
         activities = ActivityEntry.objects.filter(creator=entry.creator, date=entry.date)
+        activity_count = activities.values('activity__type__type').annotate(total_time=Sum('time'))
+
         context_dict['entry'] = entry
         context_dict['activities'] = activities
+        context_dict['activity_types'] = activity_count
+
     except Entry.DoesNotExist:
         context_dict['entry'] = None
 
