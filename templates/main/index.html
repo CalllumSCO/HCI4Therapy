@@ -150,22 +150,59 @@
 <script>
 
     var a = {{moods | safe}};
+    var dateList = [{% for d in dates %}"{{d}}",{%endfor%}];
+    var happinessVals = [{% for i in happiness %}"{{i}}",{%endfor%}];
+    var angerVals = [{% for i in anger %}"{{i}}",{%endfor%}];
+    var disgustVals = [{% for i in disgust %}"{{i}}",{%endfor%}];
+    var fearVals = [{% for i in fear %}"{{i}}",{%endfor%}];
+    var powerVals = [{% for i in power %}"{{i}}",{%endfor%}];
+    var peaceVals = [{% for i in peace %}"{{i}}",{%endfor%}];
 
+    console.log(angerVals)
     const data = {
-    labels: ["M", "T", "W", "Th", "F", "Sa", "Su"],
+    labels: dateList,
     datasets: [
         {
-        label: 'Dataset 1',
-        data: {{times | safe}},
-        //borderColor: Utils.CHART_COLORS.red,
-        //backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-        order: 1
+        label: 'Happiness',
+        data: happinessVals,
+        order: 1,
+        backgroundColor: "#23abd8",
+        },
+        {
+        label: 'Anger',
+        data: angerVals,
+        order: 1,
+        backgroundColor: "#ff4040",
+        },
+        {
+        label: 'Disgust',
+        data: disgustVals,
+        order: 1,
+        backgroundColor: "#1ddfa3",
+        },
+        {
+        label: 'Fear',
+        data: fearVals,
+        order: 1,
+        backgroundColor: "#6e40aa",
+        },
+        {
+        label: 'Power',
+        data: powerVals,
+        order: 1,
+        backgroundColor: "#e2b72f",
+        },
+        {
+        label: 'Peace',
+        data: peaceVals,
+        order: 1,
+        backgroundColor: "#fe4b83",
         },
         {
         label: 'Mood',
         data: a,
-        borderColor: 'blue',
-        backgroundColor: 'purple',
+        borderColor: 'black',
+        backgroundColor: 'transparent',
         type: 'line',
         order: 0
         }
@@ -184,10 +221,15 @@
             title: {
                 display: true,
                 text: 'Chart.js Combined Line/Bar Chart'
-            }
+            },
+            backgroundColor: 'white'
             }
         },
     })
+</script>
+
+<script>
+    
 </script>
 
 {% endblock %}

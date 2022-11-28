@@ -19,19 +19,44 @@ def index(request):
     context = {}
     today = date.today()
     seven_days_before = today - timedelta(days=7)
+    dates = []
     if request.user.is_authenticated:
         entries = Entry.objects.filter(creator=request.user, date__gte=seven_days_before).order_by('-date')
+        for e in entries.order_by("date"):
+            dates.append("{day}/{month}".format(day=e.date.day, month=e.date.month))
         for e in entries:
             if e.date == date.today():
                 entries = entries[1:]
                 break
         context['today'] = Entry.objects.filter(creator=request.user, date=today).order_by('-date')
-        print(context['today'])
+        context['dates'] = dates
         context['entries'] = entries
+
         moods = []
-        for e in entries:
+        happiness = []
+        anger = []
+        disgust = []
+        fear = []
+        power = []
+        peace = []
+
+        for e in Entry.objects.filter(creator=request.user, date__gte=seven_days_before).order_by('date'):
             moods.append(e.mood)
+            happiness.append(e.happiness)
+            anger.append(e.anger)
+            disgust.append(e.disgust)
+            fear.append(e.fear)
+            power.append(e.power)
+            peace.append(e.peace)
+
         context['moods'] = moods
+        context['happiness'] = happiness
+        context['anger'] = anger
+        context['disgust'] = disgust
+        context['fear'] = fear
+        context['power'] = power
+        context['peace'] = peace
+        
         activity_entries = ActivityEntry.objects.filter(creator=request.user, date__gte=seven_days_before).order_by('-date')
         context['activities'] = activity_entries
         times = []
