@@ -72,56 +72,56 @@
             {% else %}
                 <h2 style="text-align: center">No entries to view yet!</h2>
             {% endif %}
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-6">
-            {% if entries %}
-                {% for entry in entries %}
-                <div class="card border-secondary mb-3">
-                <div class="card-header">Entries for {{ entry.date }}</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm">
-                            <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled">
-                                <li class="nav-item">
-                                    <a href="entry/{{ entry.url }}/"
-                                       class="btn btn-outline-info p" role="button">
-                                        View Entry
-                                    </a>
-                                </li>
-                            </nav>
-                        </div>
-                        <div class="col-sm">
-                            <div class="dropdown text-center">
-                                    <button class="btn btn-outline-dark justify-content-center align-items-center dropdown-toggle" type="button" id="dropdownMenuButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        View/Edit Activity Logs
-                                    </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                {% for activity in activities %}
-                                   {% if activity.date == entry.date %}
-                                       <a class="dropdown-item" href="edit-activity-entry/{{ activity.url }}/">
-                                           {{ activity.activity }} - {{ activity.time }} minutes</a>
-                                   {% endif %}
-                                {% endfor %}
+                <div class="row">
+                    <div class="col">
+                        {% if entries %}
+                            {% for entry in entries %}
+                            <div class="card border-secondary mb-3">
+                            <div class="card-header">Entries for {{ entry.date }}</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled">
+                                            <li class="nav-item">
+                                                <a href="entry/{{ entry.url }}/"
+                                                   class="btn btn-outline-info p" role="button">
+                                                    View Entry
+                                                </a>
+                                            </li>
+                                        </nav>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="dropdown text-center">
+                                                <button class="btn btn-outline-dark justify-content-center align-items-center dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    View/Edit Activity Logs
+                                                </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            {% for activity in activities %}
+                                               {% if activity.date == entry.date %}
+                                                   <a class="dropdown-item" href="edit-activity-entry/{{ activity.url }}/">
+                                                       {{ activity.activity }} - {{ activity.time }} minutes</a>
+                                               {% endif %}
+                                            {% endfor %}
+                                            </div>
+                                        </div>
+            
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <h2 style="text-align: center">No entries to view yet!</h2>
+                        {% endif %}
                     </div>
-                </div>
-                </div>
-                {% endfor %}
-            {% else %}
-                <h2 style="text-align: center">No entries to view yet!</h2>
-            {% endif %}
         </div>
-        <div class="col-lg-6">
-            <h1 class="justify-content-center">SPACE FOR DATA VISUALS</h1>
+</div>
+
+
+        <div class="col">
+            <h1>Your Week in Review</h1>
+            <h2>Mood by Day</h2>
             <canvas id="mainGraph" style="width:100%;max-width:700px"></canvas>
         </div>
     </div>
@@ -158,7 +158,6 @@
     var powerVals = [{% for i in power %}"{{i}}",{%endfor%}];
     var peaceVals = [{% for i in peace %}"{{i}}",{%endfor%}];
 
-    console.log(angerVals)
     const data = {
     labels: dateList,
     datasets: [
@@ -229,7 +228,7 @@
 </script>
 
 <script>
-    
+    var types = [{% for i in activity_types %}"{{i.activity__type__type}}"{% endfor %}];
 </script>
 
 {% endblock %}
