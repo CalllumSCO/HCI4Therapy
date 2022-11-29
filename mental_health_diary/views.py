@@ -146,7 +146,7 @@ def view_all_logs(request):
     if request.user.is_authenticated:
         dates=[]
         entries = Entry.objects.filter(creator=request.user).order_by('-date')
-        for e in entries:
+        for e in Entry.objects.filter(creator=request.user).order_by('date'):
             dates.append("{day}/{month}".format(day=e.date.day, month=e.date.month))
         for e in entries:
             if e.date == date.today():
@@ -243,7 +243,9 @@ def edit_entry(request, entry_slug):
         if request.method == 'POST':
             form = EntryForm(request.POST, instance=editing)
             if form.is_valid():
-                entry = form.save()
+                entry = form.save(commit=False)
+                entry.mood = (entry.power + entry.happiness + entry.peace - (entry.disgust + entry.anger + entry.fear))/6
+                entry.save()
             return redirect('index')
 
         context_dict = {'form': form, 'instance': editing}
