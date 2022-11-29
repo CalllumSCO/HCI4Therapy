@@ -192,6 +192,7 @@ def view_entry(request, entry_slug):
         context_dict['entry'] = entry
         context_dict['activities'] = activities
         context_dict['activity_types'] = activity_count
+        context_dict['is_today'] = entry.date == date.today()
 
     except Entry.DoesNotExist:
         context_dict['entry'] = None

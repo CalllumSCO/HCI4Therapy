@@ -17,7 +17,7 @@
     </div>
 <div class="col">
 
-        <h2>Today's Activities    <a href="{% url 'new_activity_entry' %}" class="btn btn-dark justify-content-end">Create New</a></h2>
+        <h2>Today's Activities    {% if is_today %}<a href="{% url 'new_activity_entry' %}" class="btn btn-dark justify-content-end">Create New</a>{% endif %}</h2>
         {%if activities %}
         <div class="row row-cols-1 row-cols-md-4 m-1">
             {% for activity in activities %}

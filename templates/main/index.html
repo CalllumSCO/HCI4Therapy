@@ -28,7 +28,7 @@
         {% if today %}
             {% for d in today %}
                 <div class="card border-secondary mb-3">
-                <div class="card-header">Entries for Today </div>
+                <div class="card-header header-dark">Entries for Today </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm">
@@ -70,7 +70,7 @@
                 </div>
             {% endfor %}
             {% else %}
-                <h2 style="text-align: center">No entries to view yet!</h2>
+                <h2 style="text-align: center">You have not added a log for <strong>today</strong> yet</h2>
             {% endif %}
                 <div class="row">
                     <div class="col">
@@ -201,6 +201,7 @@
         label: 'Mood',
         data: a,
         borderColor: 'black',
+        borderWidth: 5,
         backgroundColor: 'transparent',
         type: 'line',
         order: 0
