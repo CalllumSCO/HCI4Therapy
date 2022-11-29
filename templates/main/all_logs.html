@@ -106,7 +106,89 @@
                     {% endfor %}
                 {% endif %}
             </div>
+
+            <canvas id="mainGraph" style="width:100%;max-width:700px"></canvas>
     </div>
     
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+
+    var a = {{moods | safe}};
+    var dateList = [{% for d in dates %}"{{d}}",{%endfor%}];
+    var happinessVals = [{% for i in happiness %}"{{i}}",{%endfor%}];
+    var angerVals = [{% for i in anger %}"{{i}}",{%endfor%}];
+    var disgustVals = [{% for i in disgust %}"{{i}}",{%endfor%}];
+    var fearVals = [{% for i in fear %}"{{i}}",{%endfor%}];
+    var powerVals = [{% for i in power %}"{{i}}",{%endfor%}];
+    var peaceVals = [{% for i in peace %}"{{i}}",{%endfor%}];
+
+    const data = {
+    labels: dateList,
+    datasets: [
+        {
+        label: 'Happiness',
+        data: happinessVals,
+        order: 1,
+        backgroundColor: "#23abd8",
+        },
+        {
+        label: 'Anger',
+        data: angerVals,
+        order: 1,
+        backgroundColor: "#ff4040",
+        },
+        {
+        label: 'Disgust',
+        data: disgustVals,
+        order: 1,
+        backgroundColor: "#1ddfa3",
+        },
+        {
+        label: 'Fear',
+        data: fearVals,
+        order: 1,
+        backgroundColor: "#6e40aa",
+        },
+        {
+        label: 'Power',
+        data: powerVals,
+        order: 1,
+        backgroundColor: "#e2b72f",
+        },
+        {
+        label: 'Peace',
+        data: peaceVals,
+        order: 1,
+        backgroundColor: "#fe4b83",
+        },
+        {
+        label: 'Mood',
+        data: a,
+        borderColor: 'black',
+        borderWidth: 5,
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        type: 'line',
+        order: 0
+        }
+    ]
+    };
+
+    var mainGraph = new Chart("mainGraph",{
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Chart.js Combined Line/Bar Chart'
+            },
+            backgroundColor: 'white'
+            }
+        },
+    })
+</script>
 {% endblock %}
