@@ -126,6 +126,19 @@
     var powerVals = [{% for i in power %}"{{i}}",{%endfor%}];
     var peaceVals = [{% for i in peace %}"{{i}}",{%endfor%}];
 
+    const plugin = {
+    id: 'customCanvasBackgroundColor',
+    beforeDraw: (chart, args, options) => {
+        const {ctx} = chart;
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = options.color || '#99ffff';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+    }
+    };
+
+
     const data = {
     labels: dateList,
     datasets: [
@@ -190,9 +203,13 @@
                 display: true,
                 text: 'Chart.js Combined Line/Bar Chart'
             },
+            customCanvasBackgroundColor: {
+                color: 'white',
+            },
             backgroundColor: 'white'
             }
         },
+        plugins: [plugin],
     })
 </script>
 {% endblock %}
