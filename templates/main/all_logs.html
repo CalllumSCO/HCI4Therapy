@@ -16,7 +16,7 @@
             {% if today %}
                 {% for d in today %}
                     <div class="card border-secondary mb-3">
-                    <div class="card-header">Entries for Today </div>
+                    <div class="card-header header-dark">Entries for Today </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm">
@@ -58,56 +58,60 @@
                     </div>
                 {% endfor %}
                 {% else %}
-                    <h2 style="text-align: center">No entries to view yet!</h2>
+                    <h2 style="text-align: center">You have not added a log for <strong>today</strong> yet</h2>
                 {% endif %}
-            </div>
-        </div>
-    </div>
-    
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6">
-                {% if entries %}
-                    {% for entry in entries %}
-                    <div class="card border-secondary mb-3">
-                    <div class="card-header">Entries for {{ entry.date }}</div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm">
-                                <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled">
-                                    <li class="nav-item">
-                                        <a href="entry/{{ entry.url }}/"
-                                           class="btn btn-outline-info p" role="button">
-                                            View Entry
-                                        </a>
-                                    </li>
-                                </nav>
-                            </div>
-                            <div class="col-sm">
-                                <div class="dropdown text-center">
-                                        <button class="btn btn-outline-dark justify-content-center align-items-center dropdown-toggle" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            View/Edit Activity Logs
-                                        </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    {% for activity in activities %}
-                                       {% if activity.date == entry.date %}
-                                           <a class="dropdown-item" href="edit-activity-entry/{{ activity.url }}/">
-                                               {{ activity.activity }} - {{ activity.time }} minutes</a>
-                                       {% endif %}
-                                    {% endfor %}
+                    <div class="row">
+                        <div class="col">
+                            {% if entries %}
+                                {% for entry in entries %}
+                                <div class="card border-secondary mb-3">
+                                <div class="card-header">Entries for {{ entry.date }}</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <nav class="navbar navbar-expand-sm bg navbar-dark list-unstyled">
+                                                <li class="nav-item">
+                                                    <a href="entry/{{ entry.url }}/"
+                                                       class="btn btn-outline-info p" role="button">
+                                                        View Entry
+                                                    </a>
+                                                </li>
+                                            </nav>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="dropdown text-center">
+                                                    <button class="btn btn-outline-dark justify-content-center align-items-center dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        View/Edit Activity Logs
+                                                    </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                {% for activity in activities %}
+                                                   {% if activity.date == entry.date %}
+                                                       <a class="dropdown-item" href="edit-activity-entry/{{ activity.url }}/">
+                                                           {{ activity.activity }} - {{ activity.time }} minutes</a>
+                                                   {% endif %}
+                                                {% endfor %}
+                                                </div>
+                                            </div>
+                
+                                        </div>
                                     </div>
                                 </div>
-    
-                            </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <h2 style="text-align: center">No entries to view yet!</h2>
+                            {% endif %}
                         </div>
-                    </div>
-                    </div>
-                    {% endfor %}
-                {% endif %}
             </div>
-
-            <canvas id="mainGraph" style="width:100%;max-width:700px;max-height: 500px;"></canvas>
+    </div>
+    
+    
+            <div class="col">
+                <h1>Mood Metrics By Day</h1>
+                <canvas id="mainGraph" style="width:100%;max-width:100%;max-height:500px;"></canvas>
+            </div>
+        </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
@@ -121,6 +125,19 @@
     var fearVals = [{% for i in fear %}"{{i}}",{%endfor%}];
     var powerVals = [{% for i in power %}"{{i}}",{%endfor%}];
     var peaceVals = [{% for i in peace %}"{{i}}",{%endfor%}];
+
+    const plugin = {
+    id: 'customCanvasBackgroundColor',
+    beforeDraw: (chart, args, options) => {
+        const {ctx} = chart;
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = options.color || '#99ffff';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+    }
+    };
+
 
     const data = {
     labels: dateList,
@@ -186,9 +203,13 @@
                 display: true,
                 text: 'Chart.js Combined Line/Bar Chart'
             },
+            customCanvasBackgroundColor: {
+                color: 'white',
+            },
             backgroundColor: 'white'
             }
         },
+        plugins: [plugin],
     })
 </script>
 {% endblock %}

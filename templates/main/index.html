@@ -122,7 +122,7 @@
         <div class="col">
             <h1>Your Week in Review</h1>
             <h2>Mood by Day</h2>
-            <canvas id="mainGraph" style="width:100%;max-width:700px;max-height:500px;"></canvas>
+            <canvas id="mainGraph" style="width:100%;max-width:100%;max-height:500px;"></canvas>
         </div>
     </div>
 </div>
@@ -157,6 +157,19 @@
     var fearVals = [{% for i in fear %}"{{i}}",{%endfor%}];
     var powerVals = [{% for i in power %}"{{i}}",{%endfor%}];
     var peaceVals = [{% for i in peace %}"{{i}}",{%endfor%}];
+
+    const plugin = {
+    id: 'customCanvasBackgroundColor',
+    beforeDraw: (chart, args, options) => {
+        const {ctx} = chart;
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = options.color || '#99ffff';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+    }
+    };
+
 
     const data = {
     labels: dateList,
@@ -222,9 +235,13 @@
                 display: true,
                 text: 'Chart.js Combined Line/Bar Chart'
             },
+            customCanvasBackgroundColor: {
+                color: 'white',
+            },
             backgroundColor: 'white'
             }
         },
+        plugins: [plugin],
     })
 </script>
 
